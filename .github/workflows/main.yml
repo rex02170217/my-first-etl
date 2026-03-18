@@ -1,0 +1,41 @@
+name: 每日美金匯率自動抓取 (Daily ETL)
+
+# 1. 觸發條件
+on:
+  schedule:
+    # 0 0 * * * 代表 UTC 凌晨 0 點執行，也就是台灣時間的早上 8 點
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 這個指令，可以隨時「手動點擊」執行測試
+
+# 2. 執行什麼任務？
+jobs:
+  run-etl-pipeline:
+    runs-on: ubuntu-latest # 跟 Github 借一台Linux 虛擬機
+
+    steps:
+    # 1：把我們倉庫裡的程式碼下載到這台虛擬電腦上
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2：在這台電腦上安裝 Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    # 3：看著清單安裝需要的套件 (requests)
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    # 4：執行我們的 ETL 腳本！
+    - name: Run ETL script
+      run: python my_first_etl.py
+
+    # 5：把更新後的 CSV 檔案存回 GitHub 倉庫
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add usd_history.csv
+        git commit -m "自動更新：新增今日匯率資料" || echo "今天沒有新資料"
+        git push
