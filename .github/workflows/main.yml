@@ -29,7 +29,7 @@ jobs:
 
     # 4：執行我們的 ETL 腳本！
     - name: Run ETL script
-      run: python my_first_etl.py
+      run: python usd.py
 
     # 5：把更新後的 CSV 檔案存回 GitHub 倉庫
     - name: Commit and push changes
