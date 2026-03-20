@@ -1,4 +1,4 @@
-name: 每日美金匯率自動抓取 (Daily ETL)
+name: 比特幣每日價格追蹤 (BTC Quant Pipeline)
 
 # 1. 觸發條件
 on:
