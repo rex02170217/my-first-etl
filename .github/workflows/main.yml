@@ -29,13 +29,13 @@ jobs:
 
     # 4：執行我們的 ETL 腳本！
     - name: Run ETL script
-      run: python usd.py
+      run: python btv_etl.py
 
     # 5：把更新後的 CSV 檔案存回 GitHub 倉庫
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add usd_history.csv
-        git commit -m "自動更新：新增今日匯率資料" || echo "今天沒有新資料"
+        git add btc_etl.py crypto_history.db
+        git commit -m "自動更新：新增 BTC 即時價格與 SQLite 資料庫" || echo "今天沒有新資料"
         git push
