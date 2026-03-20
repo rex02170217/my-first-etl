@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Step 1: Extract  
 print(" Extract: 抓取比特幣最新價格...")
-# 幣安公開 API：指定要看 BTC 對 USDT 的價格
+# 公開 API：指定要看 BTC 對 USDT 的價格
 url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
 response = requests.get(url)
 raw_data = response.json()
@@ -13,8 +13,7 @@ raw_data = response.json()
 # Step 2: Transform 
 
 print(" Transform: 整理價格與時間...")
-# 幣安回傳的格式：{"symbol": "BTCUSDT", "price": "65432.10"}
-# CoinGecko 回傳的格式長這樣：{"bitcoin": {"usd": 65432.10}}
+# CoinGecko 回傳的格式：{"bitcoin": {"usd": 65432.10}}
 symbol = "BTC/USD"
 btc_price = float(raw_data['bitcoin']['usd']) 
 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
