@@ -5,7 +5,7 @@ on:
   schedule:
     # 0 0 * * * 代表 UTC 凌晨 0 點執行，也就是台灣時間的早上 8 點
     - cron: '0 0 * * *'
-  workflow_dispatch: # 這個指令，可以隨時「手動點擊」執行測試
+  workflow_dispatch: 
 
 # 2. 執行什麼任務？
 jobs:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest # 跟 Github 借一台Linux 虛擬機
 
     steps:
-    # 1：把我們倉庫裡的程式碼下載到這台虛擬電腦上
+    # 1：把倉庫裡的程式碼下載到這台虛擬電腦上
     - name: Checkout repository
       uses: actions/checkout@v3
 
@@ -23,15 +23,15 @@ jobs:
       with:
         python-version: '3.10'
 
-    # 3：看著清單安裝需要的套件 (requests)
+    # 3：看著清單安裝需要的套件 
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    # 4：執行我們的 ETL 腳本！
+    # 4：執行 ETL 腳本
     - name: Run ETL script
       run: python btc_etl.py
 
-    # 5：把更新後的 CSV 檔案存回 GitHub 倉庫
+    # 5：把更新後的 資料 Insert 進資料庫
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
