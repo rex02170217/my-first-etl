@@ -48,4 +48,4 @@ cursor.execute('''
 conn.commit()
 conn.close()
 
-print("✅ ETL 流程執行成功！BTC 價格已存入 crypto_history.db")
+print("BTC 價格已存入 crypto_history.db")
